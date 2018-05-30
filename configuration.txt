@@ -1,0 +1,3 @@
+{
+	"URL":"localhost/point_db.php"
+}
