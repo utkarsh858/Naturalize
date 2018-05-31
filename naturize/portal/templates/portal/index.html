@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Naturalize</title>
+</head>
+<body>
+<div class="login">
+<form method="post" action="portal/dashboard">
+Aadhar number :<br>
+<input type="text" name="aadhar"><br>
+Passcode : <br>
+<input type="password" name="password">
+</form>
+{%  if error %}<bold>{{ error }}</bold>{% endif %}
+</div>
+</body>
+</html>
