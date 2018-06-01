@@ -4,6 +4,8 @@
 	<title>Dashboard</title>
 </head>
 <body>
-{{points}}
+{{points}}<br><br><br><br><form action="logout/" method="post"> {% csrf_token %}
+	<input type="submit" name="logout" value="Logout">
+</form>
 </body>
 </html>
