@@ -5,13 +5,15 @@
 </head>
 <body>
 <div class="login">
-<form method="post" action="portal/dashboard">
+<form method="post" action="{% if action_path %}{{ action_path }}{% endif %}">{% csrf_token %}
 Aadhar number :<br>
 <input type="text" name="aadhar"><br>
 Passcode : <br>
-<input type="password" name="password">
+<input type="password" name="password"><br>
+<input type="submit" name="submit" value="Submit">
 </form>
 {%  if error %}<bold>{{ error }}</bold>{% endif %}
 </div>
+{{request.path}}
 </body>
 </html>

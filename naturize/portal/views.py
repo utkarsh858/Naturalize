@@ -17,21 +17,25 @@ def check_password(hashed_password, user_password):
 
 
 def index(request):
+	action_path = "dashboard/"
 	template = loader.get_template('portal/index.html')
-	return HttpResponse(template.render({},request) )
+	return HttpResponse(template.render({"action_path":action_path},request) )
 
 def dashboard(request):
 	template = loader.get_template('portal/index.html')
-	if (request.post['aadhar']=='') or (request.post['password']==''):
-		return HttpResponse(template.render({'error':"Partially filled form"},request))
+	
+	action_path = ""
+	if (request.POST['aadhar']=='') or (request.POST['password']==''):
+		return HttpResponse(template.render({'error':"Partially filled form","action_path":action_path},request))
 
 	try:
-		selected_row = MainModel.objects.get(aadhar_number = request.post['aadhar'])
+		selected_row = MainModel.objects.get(aadhar_number = request.POST['aadhar'])
 	except (KeyError, MainModel.DoesNotExist):
-		return HttpResponse(template.render({'error':"Incorrect Aadhar or Password"},request))
+		return HttpResponse(template.render({'error':"Incorrect Aadhar or Password","action_path":action_path},request))
 	else:
-		if check_password(selected_row.password , request.post['password']):
+		# if check_password(selected_row.password , request.POST['password']):
+		if (selected_row.password == request.POST['password']):
 			teplate2 = loader.get_template('portal/dashboard.html')
 			return HttpResponse(teplate2.render({'points':""},request))
 		else:
-			return HttpResponse(template.render({'error':"Incorrect Aadhar or Password"},request))
+			return HttpResponse(template.render({'error':"Incorrect Aadhar or Password","action_path":action_path},request))
