@@ -1,6 +1,6 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import MainModel
+from .models import Citizen
 
-admin.site.register(MainModel)
+admin.site.register(Citizen)

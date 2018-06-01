@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
 import hashlib
-from .models import MainModel
+from .models import Citizen
 # import django.template.loader
 # Create your views here.
 
@@ -29,13 +29,13 @@ def dashboard(request):
 		return HttpResponse(template.render({'error':"Partially filled form","action_path":action_path},request))
 
 	try:
-		selected_row = MainModel.objects.get(aadhar_number = request.POST['aadhar'])
-	except (KeyError, MainModel.DoesNotExist):
+		selected_row = Citizen.objects.get(aadhar_number = request.POST['aadhar'])
+	except (KeyError, Citizen.DoesNotExist):
 		return HttpResponse(template.render({'error':"Incorrect Aadhar or Password","action_path":action_path},request))
 	else:
 		# if check_password(selected_row.password , request.POST['password']):
 		if (selected_row.password == request.POST['password']):
 			teplate2 = loader.get_template('portal/dashboard.html')
-			return HttpResponse(teplate2.render({'points':""},request))
+			return HttpResponse(teplate2.render({'points':selected_row.points},request))
 		else:
 			return HttpResponse(template.render({'error':"Incorrect Aadhar or Password","action_path":action_path},request))
